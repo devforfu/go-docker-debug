@@ -4,7 +4,7 @@ COPY ./src /go/src
 RUN apk add --no-cache git && \
     go get github.com/derekparker/delve/cmd/dlv && \
     go get github.com/gorilla/schema && \
-    go build -gcflags "all=-N -l" -o /server hello && \
+    go build -gcflags "all=-N -l" -o /server main && \
     apk del git
 
 FROM alpine:3.7
@@ -13,5 +13,4 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /
 COPY --from=build-env /server /
 COPY --from=build-env /go/bin/dlv /
-#CMD ["/server"]
 CMD ["/dlv", "--listen=:40000", "--headless=true", "--api-version=2", "exec", "/server"]

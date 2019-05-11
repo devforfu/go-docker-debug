@@ -1,18 +1,11 @@
-package main
+package hello
 
 import (
     "fmt"
     "github.com/gorilla/schema"
-    "log"
     "net/http"
     "timestamp"
 )
-
-func main() {
-    log.Println("starting server...")
-    http.HandleFunc("/", Timestamp)
-    log.Fatal(http.ListenAndServe(":8080", nil))
-}
 
 func Timestamp(w http.ResponseWriter, r *http.Request) {
     type options struct {
